@@ -1,0 +1,9 @@
+
+
+.bg-dark-subtle{
+    background-color: rgba(var(--#{$prefix}dark-rgb),.25)!important;
+}
+
+.bg-light-subtle{
+    background-color: rgba(var(--#{$prefix}light-rgb),.4)!important;
+}

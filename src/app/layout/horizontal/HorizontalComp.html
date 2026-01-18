@@ -1,0 +1,13 @@
+<div id="layout-wrapper">
+    <HorizontalNavComp (mobileMenuButtonClicked)="onToggleMobileMenu()"
+                    (settingsButtonClicked)="onSettingsButtonClicked()"></HorizontalNavComp>
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <StFooterComp></StFooterComp>
+    </div>
+</div>
+<SettingRightSidebarComp></SettingRightSidebarComp>

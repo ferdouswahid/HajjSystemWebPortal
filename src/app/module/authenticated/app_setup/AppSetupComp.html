@@ -1,0 +1,98 @@
+<mat-tab-group animationDuration="0ms">
+  <mat-tab label="App Config Info">
+    <div class="container-fluid">
+      <div class="row mt-4">
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title" *ngIf="appConfigInfoFg.controls['updateMode'].value == true">
+                Update App Config Info
+              </h4>
+              <h4 class="card-title" *ngIf="appConfigInfoFg.controls['updateMode'].value == false">
+                Add App Config Info
+              </h4>
+              <p class="card-title-desc">
+                To add or update fill the form please.
+              </p>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="appConfigInfoFg">
+                <!-- {{appConfigInfoFg.value | json}} -->
+                <!-- this.appConfigInfoFg.patchValue(
+                { bedCategory: new BedCategory({ id: $event.id }) })-->
+                <div class="mb-4">
+                  <label class="form-label" for="name">Name</label>
+                  <input formControlName="name" class="form-control" type="text" id="name"
+                    placeholder="Enter App Config Info name" />
+                </div>
+                <!-- Display 'Update' button if updateMode is true -->
+                <button *ngIf="appConfigInfoFg.controls['updateMode'].value" type="submit"
+                  class="btn btn-outline-primary waves-effect waves-light mt-2 mx-1" (click)="update()">Update</button>
+
+                <!-- Display 'Save' button if updateMode is false -->
+                <button *ngIf="!appConfigInfoFg.controls['updateMode'].value" type="submit"
+                  class="btn btn-outline-primary waves-effect waves-light mt-2 mx-1" (click)="save()">Save</button>
+                <button type="submit" class="btn btn-outline-primary waves-effect waves-light mt-2 mx-1"
+                  (click)="reset()">Reset</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8">
+          <div class="card" [formGroup]="appConfigInfoSearchFg">
+            <div class="card-header">
+              <h4 class="card-title">All App Config Info</h4>
+              <p class="card-title-desc"></p>
+              <div class="row">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="App Config Info Search by name"
+                    formControlName="name">
+                </div>
+                <div class="col">
+                  <button type="button" (click)="searchByName(appConfigInfoSearchFg.controls['name'].value)"
+                    class="btn btn-outline-primary waves-effect waves-light mx-1">
+                    Search by name
+                  </button>
+                  <!-- <button type="button" (click)="search({page: 0, itemsPerPage: this.adminConfigSearchFg.value['size']})"
+                    class="btn btn-outline-primary waves-effect waves-light mx-1">
+                    Search all
+                  </button> -->
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- <DataGridComp [dataList$]="appConfigInfoList$" [colDefList]="colDefList"></DataGridComp> -->
+            </div>
+            <div class="card-body row mb-4">
+              <div class="col-md-4 mt-2">
+                <label class="form-label">Items Per Page</label>
+                <ng-select [items]="showItemPerPage" formControlName="size"
+                  (change)="onChangeItemPerPage($event)"></ng-select>
+              </div>
+              <div class="col-md-8">
+                <!-- <PaginationComp [page]="appConfigInfoPage" (onPageChange)="search($event)"></PaginationComp> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="App Rules">
+    <ul>
+      <li> 1 Setup Hotel Config Info </li>
+      <li> 2 Setup country. </li>
+      <li> 3 Create Some admin </li>
+      <li> 4 Create an admin </li>
+    </ul>
+  </mat-tab>
+  <mat-tab label="Third">
+    <h1>this is third tab</h1>
+  </mat-tab>
+  <mat-tab label="Fourth">
+    <h1>this is fourth tab</h1>
+  </mat-tab>
+  <mat-tab label="Fifth">
+    <h1>this is fifth tab</h1>
+  </mat-tab>
+</mat-tab-group>

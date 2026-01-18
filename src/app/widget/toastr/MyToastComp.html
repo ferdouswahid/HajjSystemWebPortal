@@ -1,0 +1,34 @@
+<!-- <div class="toastr-container">
+  <div *ngFor="let msg of messages" class="toastr" [ngClass]="msg.type">
+    {{ msg.message }}
+  </div>
+</div> -->
+
+
+<!-- <div class="toastr-container">
+  <div *ngFor="let msg of messages" class="toastr" [ngClass]="msg.type" [class]="msg.position">
+    <div class="toastr-icon">
+      <i class="fa" [ngClass]="{'fa-check-circle': msg.type === 'success', 'fa-times-circle': msg.type === 'error', 'fa-info-circle': msg.type === 'info', 'fa-exclamation-triangle': msg.type === 'warning'}"></i>
+    </div>
+    <div class="toastr-content">
+      <div class="toastr-title" *ngIf="msg.title">{{ msg.title }}</div>
+      <div class="toastr-message">{{ msg.message }}</div>
+    </div>
+    <div class="toastr-close" (click)="removeMessage(msg)">
+      &times;
+    </div>
+  </div>
+</div> -->
+
+
+<div class="toastr-container">
+  <div class="d-flex" *ngFor="let msg of messages" [ngClass]="['toastr', msg.type, msg.position]">
+    <div class="">
+      <h4 *ngIf="msg.title">{{ msg.title }}</h4>
+      <p>{{ msg.message }}</p>
+    </div>
+    <div class="toastr-close" (click)="removeMessage(msg)" style="margin-left: auto; font-size: 2rem;">
+      <span>&times;</span>
+    </div>
+  </div>
+</div>

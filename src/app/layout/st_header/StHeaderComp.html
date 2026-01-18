@@ -1,0 +1,287 @@
+<header id="page-topbar">
+  <div class="navbar-header">
+    <div class="d-flex">
+      <div class="navbar-brand-box">
+        <a routerLink="/" class="logo logo-dark">
+          <span class="logo-sm">
+            <img src="assets/images/logo-sm.svg" alt="" height="24">
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">Hajj System</span>
+          </span>
+        </a>
+        <a routerLink="/" class="logo logo-light">
+          <span class="logo-sm">
+            <img src="assets/images/logo-sm.svg" alt="" height="24">
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">abc</span>
+          </span>
+        </a>
+      </div>
+      <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn"
+        (click)="toggleMobileMenu($event)"><i class="fa fa-fw fa-bars"></i></button>
+      <form class="app-search d-none d-lg-block">
+        <div class="position-relative">
+          <input type="text" class="form-control" placeholder="Search...">
+          <button class="btn btn-primary" type="button">
+            <i class="bx bx-search-alt align-middle"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="d-flex">
+      <div class="dropdown d-inline-block d-lg-none ms-2">
+        <button type="button" class="btn header-item" [matMenuTriggerFor]="menuSearch"
+          id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          🔔
+        </button>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-search-dropdown">
+          <mat-menu #menuSearch="matMenu">
+            <form class="p-3">
+              <div class="form-group m-0">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search ..." aria-label="Search Result">
+                  <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                </div>
+              </div>
+            </form>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="dropdown d-none d-sm-inline-block">
+        <button [matMenuTriggerFor]="menuLanguage" type="button" class="btn header-item"
+          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img *ngIf="flagvalue !== undefined" src="{{flagvalue}}" alt="Header Language" height="16">
+          <img *ngIf="flagvalue === undefined" src="{{valueset}}" alt="Header Language" height="16">
+        </button>
+        <div class="dropdown-menu dropdown-menu-end">
+          <mat-menu #menuLanguage="matMenu">
+            <a mat-menu-item href="javascript:void(0);" class="dropdown-item notify-item" *ngFor="let item of listLang"
+              (click)="setLanguage(item.text, item.lang, item.flag)" [ngClass]="{'active': cookieValue === item.lang}">
+              <img src="{{item.flag}}" alt="user-image" class="me-1" height="12">
+              <span class="align-middle">{{item.text}}</span>
+            </a>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="dropdown d-none d-sm-inline-block">
+        <button type="button" class="btn header-item" id="mode-setting-btn">
+          <ng-container *ngIf="layoutMode == 'light'">
+            ☀
+          </ng-container>
+          <ng-container *ngIf="layoutMode == 'dark'">
+            🌙
+          </ng-container>
+        </button>
+      </div>
+      <div class="dropdown d-none d-lg-inline-block ms-1">
+        <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          ✉
+        </button>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+          <div class="p-2">
+            <div class="row g-0">
+              <div class="col">
+                <a class="dropdown-icon-item" href="javascript:void(0)">
+                  <img src="assets/images/brands/github.png" alt="Github">
+                  <span>GitHub</span>
+                </a>
+              </div>
+              <div class="col">
+                <a class="dropdown-icon-item" href="javascript:void(0)">
+                  <img src="assets/images/brands/bitbucket.png" alt="bitbucket">
+                  <span>Bitbucket</span>
+                </a>
+              </div>
+              <div class="col">
+                <a class="dropdown-icon-item" href="javascript:void(0)">
+                  <img src="assets/images/brands/dribbble.png" alt="dribbble">
+                  <span>Dribbble</span>
+                </a>
+              </div>
+            </div>
+            <div class="row g-0">
+              <div class="col">
+                <a class="dropdown-icon-item" href="javascript:void(0)">
+                  <img src="assets/images/brands/dropbox.png" alt="dropbox">
+                  <span>Dropbox</span>
+                </a>
+              </div>
+              <div class="col">
+                <a class="dropdown-icon-item" href="javascript:void(0)">
+                  <img src="assets/images/brands/mail_chimp.png" alt="mail_chimp">
+                  <span>Mail Chimp</span>
+                </a>
+              </div>
+              <div class="col">
+                <a class="dropdown-icon-item" href="javascript:void(0)">
+                  <img src="assets/images/brands/slack.png" alt="slack">
+                  <span>Slack</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown d-inline-block">
+        <button [matMenuTriggerFor]="menuNotification" type="button"
+          class="header-item noti-icon position-relative" id="page-header-notifications-dropdown"
+          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          🔔
+          <span class="badge bg-danger rounded-pill notification-number-badge">5</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+          aria-labelledby="page-header-notifications-dropdown">
+          <mat-menu #menuNotification="matMenu">
+            <div class="p-3">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="m-0"> Notification </h6>
+                </div>
+                <div class="col-auto">
+                  <a href="javascript:void(0);" class="small text-reset text-decoration-underline">
+                    View all
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div style="max-height: 250px;">
+              <a mat-menu-item href="#" class="text-reset notification-item">
+                <div class="d-flex">
+                  <div class="flex-shrink-0 me-3">
+                    <img src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1">Header Notification</h6>
+                    <div class="font-size-13 text-muted">
+                      <p class="mb-1">Header Notification Text</p>
+                      <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                        <span> 5 Hours Ago </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a mat-menu-item href="javascript:void(0);" class="text-reset notification-item">
+                <div class="d-flex">
+                  <div class="flex-shrink-0 avatar-sm me-3">
+                    <span class="avatar-title bg-primary rounded-circle font-size-16">
+                      <i class="bx bx-cart"></i>
+                    </span>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1">Header Notification</h6>
+                    <div class="font-size-13 text-muted">
+                      <p class="mb-1">Header Notification First Text with details</p>
+                      <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                        <span> 5 Hours Ago </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a mat-menu-item href="javascript:void(0);" class="text-reset notification-item">
+                <div class="d-flex">
+                  <div class="flex-shrink-0 avatar-sm me-3">
+                    <span class="avatar-title bg-success rounded-circle font-size-16">
+                      <i class="bx bx-badge-check"></i>
+                    </span>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1">Header Notification</h6>
+                    <div class="font-size-13 text-muted">
+                      <p class="mb-1">Header Notification text</p>
+                      <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                        <span> 10 Hours Ago </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a mat-menu-item href="javascript:void(0);" class="text-reset notification-item">
+                <div class="d-flex">
+                  <div class="flex-shrink-0 me-3">
+                    <img src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1">Header Notification</h6>
+                    <div class="font-size-13 text-muted">
+                      <p class="mb-1">Header Notification text</p>
+                      <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                        <span> 11 Hours Ago </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <div class="p-2 border-top d-grid">
+                <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                  <i class="mdi mdi-arrow-right-circle me-1"></i> <span>View More</span>
+                </a>
+              </div>
+            </div>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="dropdown d-inline-block">
+        <button type="button" class="btn header-item right-bar-toggle me-2" (click)="toggleRightSidebar()">
+          📝
+        </button>
+      </div>
+      <div class="dropdown d-inline-block">
+        <button type="button" class="header-item topbar-light border-start border-end"
+          [matMenuTriggerFor]="menu">
+          <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+          <span class="d-none d-xl-inline-block ms-1 fw-medium"> Abcc</span>
+          <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end">
+          <mat-menu #menu="matMenu">
+            <a class="dropdown-item" id="my-dropdown" routerLink="/apps/profile" mat-menu-item>
+              <i class="mdi mdi-lock font-size-16 align-middle me-1"></i>
+              Profile
+            </a>
+            <a class="dropdown-item" routerLink="/account/lock-screen" mat-menu-item>
+              <i class="mdi mdi-lock font-size-16 align-middle me-1"></i>
+              Lock screen
+            </a>
+            <a class="dropdown-item" href="javascript: void(0);" (click)="logout()" mat-menu-item>
+              <i class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i>
+              <span class="align-middle">
+                Logout
+              </span>
+            </a>
+          </mat-menu>
+        </div>
+      </div>
+
+
+      <!-- <div class="dropdown d-inline-block" ngbDropdown>
+        <button type="button" class="btn header-item topbar-light bg-light-subtle border-start border-end"
+          id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          ngbDropdownToggle>
+          <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+          <span class="d-none d-xl-inline-block ms-1 fw-medium">Ferdous</span>
+          <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/apps/profile">
+            <i class="mdi mdi-face-man font-size-16 align-middle me-1"></i> Profile</a>
+          <a class="dropdown-item" routerLink="/account/lock-screen"><i
+              class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock screen</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript: void(0);" (click)="logout()"><i
+              class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i>
+            <span class="align-middle">Logout</span></a>
+        </div>
+      </div> -->
+
+
+
+
+
+    </div>
+  </div>
+</header>

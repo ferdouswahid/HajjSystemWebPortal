@@ -1,0 +1,113 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Company Registration</h4>
+          <p class="card-title-desc">Register your company to get started.</p>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="companyFg" (ngSubmit)="onSubmit()">
+            <!-- First Name -->
+            <div class="mb-3">
+              <label class="form-label" for="firstName">First Name</label>
+              <input formControlName="firstName" class="form-control" type="text" id="firstName"
+                placeholder="Enter first name" />
+            </div>
+
+            <!-- Middle Name -->
+            <div class="mb-3">
+              <label class="form-label" for="middleName">Middle Name</label>
+              <input formControlName="middleName" class="form-control" type="text" id="middleName"
+                placeholder="Enter middle name" />
+            </div>
+
+            <!-- Last Name -->
+            <div class="mb-3">
+              <label class="form-label" for="lastName">Last Name</label>
+              <input formControlName="lastName" class="form-control" type="text" id="lastName"
+                placeholder="Enter last name" />
+            </div>
+
+            <!-- Username (Required) -->
+            <div class="mb-3">
+              <label class="form-label" for="username">Username <span class="text-danger">*</span></label>
+              <input formControlName="username" class="form-control" type="text" id="username"
+                placeholder="Enter username" />
+              <div class="text-danger small" *ngIf="companyFg.get('username')?.invalid && companyFg.get('username')?.touched">
+                <small *ngIf="companyFg.get('username')?.errors?.['required']">Username is required</small>
+              </div>
+            </div>
+
+            <!-- Password (Required) -->
+            <div class="mb-3">
+              <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
+              <input formControlName="password" class="form-control" type="password" id="password"
+                placeholder="Enter password" />
+              <div class="text-danger small" *ngIf="companyFg.get('password')?.invalid && companyFg.get('password')?.touched">
+                <small *ngIf="companyFg.get('password')?.errors?.['required']">Password is required</small>
+              </div>
+            </div>
+
+            <!-- Email (Required) -->
+            <div class="mb-3">
+              <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
+              <input formControlName="email" class="form-control" type="email" id="email"
+                placeholder="Enter email address" />
+              <div class="text-danger small" *ngIf="companyFg.get('email')?.invalid && companyFg.get('email')?.touched">
+                <small *ngIf="companyFg.get('email')?.errors?.['required']">Email is required</small>
+              </div>
+            </div>
+
+            <!-- Company Name (Required) -->
+            <div class="mb-3">
+              <label class="form-label" for="companyName">Company Name <span class="text-danger">*</span></label>
+              <input formControlName="companyName" class="form-control" type="text" id="companyName"
+                placeholder="Enter company name" />
+              <div class="text-danger small" *ngIf="companyFg.get('companyName')?.invalid && companyFg.get('companyName')?.touched">
+                <small *ngIf="companyFg.get('companyName')?.errors?.['required']">Company Name is required</small>
+              </div>
+            </div>
+
+            <!-- CR Number (Required) -->
+            <div class="mb-3">
+              <label class="form-label" for="crNumber">CR Number <span class="text-danger">*</span></label>
+              <input formControlName="crNumber" class="form-control" type="text" id="crNumber"
+                placeholder="Enter CR number" />
+              <div class="text-danger small" *ngIf="companyFg.get('crNumber')?.invalid && companyFg.get('crNumber')?.touched">
+                <small *ngIf="companyFg.get('crNumber')?.errors?.['required']">CR Number is required</small>
+              </div>
+            </div>
+
+            <!-- Season (Required) -->
+            <div class="mb-3">
+              <label class="form-label" for="seasonId">Season <span class="text-danger">*</span></label>
+              <ng-select [items]="seasonList" bindLabel="title" bindValue="id"
+                formControlName="seasonId" id="seasonId" placeholder="Select season">
+              </ng-select>
+              <div class="text-danger small" *ngIf="companyFg.get('seasonId')?.invalid && companyFg.get('seasonId')?.touched">
+                <small *ngIf="companyFg.get('seasonId')?.errors?.['required']">Season is required</small>
+              </div>
+            </div>
+
+            <!-- Buttons 50% each -->
+            <div class="mt-4">
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary flex-fill" [disabled]="isSubmitting">
+                  <span *ngIf="!isSubmitting">Register</span>
+                  <span *ngIf="isSubmitting">
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Registering...
+                  </span>
+                </button>
+                <button type="button" (click)="resetForm()" class="btn btn-light flex-fill">
+                  Clear
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

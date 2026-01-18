@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title" *ngIf="!isEditMode">Add New Meal Type</h4>
+        <h4 class="card-title" *ngIf="isEditMode">Edit Meal Type</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="mealTypeFg" (ngSubmit)="onSubmit()">
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
+            <input formControlName="name" class="form-control" type="text" id="name"
+              placeholder="Enter meal type name" />
+            <div class="text-danger small" *ngIf="mealTypeFg.get('name')?.invalid && mealTypeFg.get('name')?.touched">
+              <small *ngIf="mealTypeFg.get('name')?.errors?.['required']">Name is required</small>
+            </div>
+          </div>
+
+          <!-- Detail -->
+          <div class="mb-3">
+            <label class="form-label" for="detail">Detail</label>
+            <textarea formControlName="detail" class="form-control" id="detail" rows="3"
+              placeholder="Enter meal type detail"></textarea>
+          </div>
+
+          <!-- Buttons Side by Side 50% each -->
+          <div class="mt-4">
+            <div class="d-flex gap-2">
+              <button *ngIf="!isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Save
+              </button>
+              <button *ngIf="isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Update
+              </button>
+              <button type="button" (click)="resetForm()"
+                class="btn btn-light flex-fill">
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="col-xl-8">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Meal Types List</h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Detail</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mealType of mealTypeList">
+              <td>{{ mealType.name }}</td>
+              <td>{{ mealType.detail }}</td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm mx-1" (click)="editMealType(mealType)">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteMealType(mealType.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="mealTypeList.length === 0">
+              <td colspan="6" class="text-center text-muted py-4">No meal types found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

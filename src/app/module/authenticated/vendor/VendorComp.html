@@ -1,0 +1,205 @@
+<div class="row">
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title" *ngIf="!isEditMode">Add New Vendor</h4>
+        <h4 class="card-title" *ngIf="isEditMode">Edit Vendor</h4>
+      </div>
+      <div class="card-body" style="max-height: 70vh; overflow-y: auto;">
+        <form [formGroup]="vendorFg" (ngSubmit)="onSubmit()">
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
+            <input formControlName="name" class="form-control" type="text" id="name"
+              placeholder="Enter vendor name" />
+            <div class="text-danger small" *ngIf="vendorFg.get('name')?.invalid && vendorFg.get('name')?.touched">
+              <small *ngIf="vendorFg.get('name')?.errors?.['required']">Name is required</small>
+            </div>
+          </div>
+
+          <!-- Name Arabic -->
+          <div class="mb-3">
+            <label class="form-label" for="nameAr">Name (Arabic)</label>
+            <input formControlName="nameAr" class="form-control" type="text" id="nameAr"
+              placeholder="Enter vendor name in Arabic" />
+          </div>
+
+          <!-- Type -->
+          <div class="mb-3">
+            <label class="form-label" for="type">Type <span class="text-danger">*</span></label>
+            <ng-select [items]="vendorTypes" bindLabel="type" bindValue="type"
+                       formControlName="type" placeholder="Select vendor type">
+            </ng-select>
+            <div class="text-danger small" *ngIf="vendorFg.get('type')?.invalid && vendorFg.get('type')?.touched">
+              <small *ngIf="vendorFg.get('type')?.errors?.['required']">Type is required</small>
+            </div>
+          </div>
+
+          <!-- Company -->
+          <div class="mb-3">
+            <label class="form-label" for="companyId">Company <span class="text-danger">*</span></label>
+            <ng-select [items]="companyList$ | async" bindLabel="companyName" bindValue="id"
+                       formControlName="companyId" placeholder="Select company...">
+            </ng-select>
+            <div class="text-danger small" *ngIf="vendorFg.get('companyId')?.invalid && vendorFg.get('companyId')?.touched">
+              <small *ngIf="vendorFg.get('companyId')?.errors?.['required']">Company is required</small>
+            </div>
+          </div>
+
+          <!-- CR Number -->
+          <div class="mb-3">
+            <label class="form-label" for="crNumber">CR Number</label>
+            <input formControlName="crNumber" class="form-control" type="text" id="crNumber"
+              placeholder="Enter CR number" />
+          </div>
+
+          <!-- VAT Reg Number -->
+          <div class="mb-3">
+            <label class="form-label" for="vatRegNumber">VAT Reg Number</label>
+            <input formControlName="vatRegNumber" class="form-control" type="text" id="vatRegNumber"
+              placeholder="Enter VAT registration number" />
+          </div>
+
+          <!-- Address -->
+          <div class="mb-3">
+            <label class="form-label" for="address">Address</label>
+            <textarea formControlName="address" class="form-control" id="address" rows="2"
+              placeholder="Enter address"></textarea>
+          </div>
+
+          <!-- Building Number -->
+          <div class="mb-3">
+            <label class="form-label" for="buildingNumber">Building Number</label>
+            <input formControlName="buildingNumber" class="form-control" type="text" id="buildingNumber"
+              placeholder="Enter building number" />
+          </div>
+
+          <!-- District -->
+          <div class="mb-3">
+            <label class="form-label" for="district">District</label>
+            <input formControlName="district" class="form-control" type="text" id="district"
+              placeholder="Enter district" />
+          </div>
+
+          <!-- City -->
+          <div class="mb-3">
+            <label class="form-label" for="city">City</label>
+            <input formControlName="city" class="form-control" type="text" id="city"
+              placeholder="Enter city" />
+          </div>
+
+          <!-- Country -->
+          <div class="mb-3">
+            <label class="form-label" for="country">Country</label>
+            <input formControlName="country" class="form-control" type="text" id="country"
+              placeholder="Enter country" />
+          </div>
+
+          <!-- Postal Code -->
+          <div class="mb-3">
+            <label class="form-label" for="postalCode">Postal Code</label>
+            <input formControlName="postalCode" class="form-control" type="text" id="postalCode"
+              placeholder="Enter postal code" />
+          </div>
+
+          <!-- Mobile -->
+          <div class="mb-3">
+            <label class="form-label" for="mobile">Mobile</label>
+            <input formControlName="mobile" class="form-control" type="text" id="mobile"
+              placeholder="Enter mobile number" />
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3">
+            <label class="form-label" for="phone">Phone</label>
+            <input formControlName="phone" class="form-control" type="text" id="phone"
+              placeholder="Enter phone number" />
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <input formControlName="email" class="form-control" type="email" id="email"
+              placeholder="Enter email address" />
+          </div>
+
+          <!-- Status -->
+          <div class="mb-3">
+            <label class="form-label" for="status">Status</label>
+            <select formControlName="status" class="form-select" id="status">
+              <option value="">Select status</option>
+              <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+            </select>
+          </div>
+
+          <!-- Buttons -->
+          <div class="mt-4">
+            <div class="d-flex gap-2">
+              <button *ngIf="!isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Save
+              </button>
+              <button *ngIf="isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Update
+              </button>
+              <button type="button" (click)="resetForm()"
+                class="btn btn-light flex-fill">
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Vendors List</h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Mobile</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vendor of vendorList">
+              <td>{{ vendor.name }}</td>
+              <td>
+                <span class="badge bg-info">{{ vendor.type }}</span>
+              </td>
+              <td>{{ vendor.mobile }}</td>
+              <td>{{ vendor.email }}</td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': vendor.status === 'ACTIVE', 'bg-secondary': vendor.status !== 'ACTIVE'}">
+                  {{ vendor.status }}
+                </span>
+              </td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm mx-1" (click)="editVendor(vendor)">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteVendor(vendor.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="vendorList.length === 0">
+              <td colspan="7" class="text-center text-muted py-4">No vendors found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

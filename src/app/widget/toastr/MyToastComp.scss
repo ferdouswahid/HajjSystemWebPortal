@@ -1,0 +1,55 @@
+.toastr-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 350px;
+}
+
+.toastr {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.toastr.success {
+  background-color: #28a745;
+}
+
+.toastr.error {
+  background-color: #dc3545;
+}
+
+// .toastr.info {
+//   background-color: #2196f3;
+// }
+
+// .toastr.warning {
+//   background-color: #ff9800;
+// }
+
+// .top-right {
+//   top: 20px;
+//   right: 20px;
+//   position: absolute;
+// }
+
+// .top-left {
+//   top: 20px;
+//   left: 20px;
+//   position: absolute;
+// }
+
+// .bottom-right {
+//   bottom: 20px;
+//   right: 20px;
+//   position: absolute;
+// }
+
+// .bottom-left {
+//   bottom: 20px;
+//   left: 20px;
+//   position: absolute;
+// }

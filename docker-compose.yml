@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  hajj-syestem-admin-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hajj-syestem-admin-ui
+    tty: true
+    ports:
+      - 4215:4215
+    volumes:
+      - ".:/home/ubuntu/software_project"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        if [ -d node_modules ]; then echo "already have node modules installed, so skiping installation proccess"; else export NG_CLI_ANALYTICS=off && npm install --force; fi
+        echo "installation is done , starting ..."
+        npm start
+
+
+# sudo docker compose -f docker-compose.yml up
+# sudo docker compose -f docker-compose.yml down
+
+# sudo docker exec -it hajj-syestem-admin-ui bash

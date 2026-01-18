@@ -1,0 +1,53 @@
+<div class="vertical-menu">  
+  <div class="h-100" style="overflow: scroll">
+    <div id="sidebar-menu">
+      <ul class="metismenu list-unstyled" id="side-menu">
+        <ng-container *ngFor="let menuItem of menuItemList">
+          <li>
+            <a *ngIf="hasItems(menuItem)" href="javascript:void(0);" class="is-parent has-arrow">
+              <span>
+                <i [class]="menuItem.icon"></i>
+                {{menuItem.label}}
+              </span>
+            </a>
+            <a [routerLink]="menuItem.link" *ngIf="!hasItems(menuItem)" class="side-nav-link-ref"
+              routerLinkActive="active">
+              <span>
+                <i [class]="menuItem.icon"></i>
+                {{menuItem.label}}
+              </span>
+            </a>
+            <ul *ngIf="hasItems(menuItem)" class="sub-menu" aria-expanded="false">
+              <li *ngFor="let subitem of menuItem.subMenuItemList">
+                <a [routerLink]="subitem.link" *ngIf="!hasItems(subitem)" class="side-nav-link-ref"
+                  routerLinkActive="active">
+                  {{ subitem.label }}
+                </a>
+                <a *ngIf="hasItems(subitem)" class="side-nav-link-a-ref has-arrow" href="javascript:void(0);"
+                  [attr.data-parent]="subitem.parentId">
+                  {{ subitem.label }}
+                </a>
+                <ul *ngIf="hasItems(subitem)" class="sub-menu mm-collapse" aria-expanded="false">
+                  <li *ngFor="let subSubitem of subitem.subMenuItemList">
+                    <a [routerLink]="subSubitem.link" routerLinkActive="active" class="side-nav-link-ref">
+                      {{ subSubitem.label }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+      <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
+        <div class="card-body">
+          <img src="../../../../assets/images/giftbox.png" alt="">
+          <div class="mt-4">
+            <h5 class="alertcard-title font-size-16">Unlimited Access</h5>
+            <a href="javascript:void(0);" class="btn btn-primary mt-2">Contact Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title" *ngIf="!isEditMode">Add New Location</h4>
+        <h4 class="card-title" *ngIf="isEditMode">Edit Location</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="locationFg" (ngSubmit)="onSubmit()">
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
+            <input formControlName="name" class="form-control" type="text" id="name"
+              placeholder="Enter location name" />
+            <div class="text-danger small" *ngIf="locationFg.get('name')?.invalid && locationFg.get('name')?.touched">
+              <small *ngIf="locationFg.get('name')?.errors?.['required']">Name is required</small>
+            </div>
+          </div>
+
+          <!-- Type -->
+          <div class="mb-3">
+            <label class="form-label" for="type">Type <span class="text-danger">*</span></label>
+            <ng-select
+              formControlName="type"
+              [items]="locationTypes"
+              id="type"
+              placeholder="Select location type"
+              bindLabel="type"
+              bindValue="type">
+            </ng-select>
+            <div class="text-danger small" *ngIf="locationFg.get('type')?.invalid && locationFg.get('type')?.touched">
+              <small *ngIf="locationFg.get('type')?.errors?.['required']">Type is required</small>
+            </div>
+          </div>
+
+          <!-- Buttons Side by Side 50% each -->
+          <div class="mt-4">
+            <div class="d-flex gap-2">
+              <button *ngIf="!isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Save
+              </button>
+              <button *ngIf="isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Update
+              </button>
+              <button type="button" (click)="resetForm()"
+                class="btn btn-light flex-fill">
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="col-xl-8">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Locations List</h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let location of locationList">
+              <td>{{ location.name }}</td>
+              <td>
+                <span class="badge bg-info">{{ location.type }}</span>
+              </td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm mx-1" (click)="editLocation(location)">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteLocation(location.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="locationList.length === 0">
+              <td colspan="6" class="text-center text-muted py-4">No locations found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

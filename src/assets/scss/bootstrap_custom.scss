@@ -1,0 +1,20 @@
+//Core files
+@import "./node_modules/bootstrap/scss/functions";
+@import "./node_modules/bootstrap/scss/variables";
+@import "bootstrap_override/variables";
+@import "bootstrap_override/variables-dark";
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+@import "bootstrap_override/reboot";
+
+//@import "bootstrap_override/alerts";
+@import "bootstrap_override/backgrounds";
+@import "bootstrap_override/badge";
+@import "bootstrap_override/buttons";
+@import "bootstrap_override/breadcrumb";
+@import "bootstrap_override/carousel";
+@import "bootstrap_override/card";
+@import "bootstrap_override/dropdown";
+
+
+//@import "bootstrap_override/shadow";

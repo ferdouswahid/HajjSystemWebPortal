@@ -1,0 +1,158 @@
+<div class="row">
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title" *ngIf="!isEditMode">Add New Vehicle Contract</h4>
+        <h4 class="card-title" *ngIf="isEditMode">Edit Vehicle Contract</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="vehicleContractFg" (ngSubmit)="onSubmit()">
+          <!-- Vehicle ID -->
+          <div class="mb-3">
+            <label class="form-label" for="vehicleId">Vehicle ID <span class="text-danger">*</span></label>
+            <ng-select
+              formControlName="vehicleId"
+              [items]="[]"
+              id="vehicleId"
+              placeholder="Select vehicle"
+              bindLabel="name"
+              bindValue="id">
+            </ng-select>
+            <div class="text-danger small" *ngIf="vehicleContractFg.get('vehicleId')?.invalid && vehicleContractFg.get('vehicleId')?.touched">
+              <small *ngIf="vehicleContractFg.get('vehicleId')?.errors?.['required']">Vehicle is required</small>
+            </div>
+          </div>
+
+          <!-- Start Date -->
+          <div class="mb-3">
+            <label class="form-label" for="startDate">Start Date <span class="text-danger">*</span></label>
+            <input formControlName="startDate" class="form-control" type="text" id="startDate"
+              placeholder="Select start date" bsDatepicker />
+            <div class="text-danger small" *ngIf="vehicleContractFg.get('startDate')?.invalid && vehicleContractFg.get('startDate')?.touched">
+              <small *ngIf="vehicleContractFg.get('startDate')?.errors?.['required']">Start Date is required</small>
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div class="mb-3">
+            <label class="form-label" for="endDate">End Date <span class="text-danger">*</span></label>
+            <input formControlName="endDate" class="form-control" type="text" id="endDate"
+              placeholder="Select end date" bsDatepicker />
+            <div class="text-danger small" *ngIf="vehicleContractFg.get('endDate')?.invalid && vehicleContractFg.get('endDate')?.touched">
+              <small *ngIf="vehicleContractFg.get('endDate')?.errors?.['required']">End Date is required</small>
+            </div>
+          </div>
+
+          <!-- Agreed Seat -->
+          <div class="mb-3">
+            <label class="form-label" for="agreedSeat">Agreed Seat <span class="text-danger">*</span></label>
+            <input formControlName="agreedSeat" class="form-control" type="number" id="agreedSeat"
+              placeholder="Enter agreed seat" min="1" />
+            <div class="text-danger small" *ngIf="vehicleContractFg.get('agreedSeat')?.invalid && vehicleContractFg.get('agreedSeat')?.touched">
+              <small *ngIf="vehicleContractFg.get('agreedSeat')?.errors?.['required']">Agreed Seat is required</small>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="mb-3">
+            <label class="form-label" for="price">Price <span class="text-danger">*</span></label>
+            <input formControlName="price" class="form-control" type="number" id="price"
+              placeholder="Enter price" step="0.01" min="0" />
+            <div class="text-danger small" *ngIf="vehicleContractFg.get('price')?.invalid && vehicleContractFg.get('price')?.touched">
+              <small *ngIf="vehicleContractFg.get('price')?.errors?.['required']">Price is required</small>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="mb-3">
+            <label class="form-label" for="status">Status <span class="text-danger">*</span></label>
+            <select formControlName="status" class="form-select" id="status">
+              <option value="">Select status</option>
+              <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+            </select>
+            <div class="text-danger small" *ngIf="vehicleContractFg.get('status')?.invalid && vehicleContractFg.get('status')?.touched">
+              <small *ngIf="vehicleContractFg.get('status')?.errors?.['required']">Status is required</small>
+            </div>
+          </div>
+
+          <!-- Service Conditions -->
+          <div class="mb-3">
+            <label class="form-label" for="serviceConditions">Service Conditions <span class="text-danger">*</span></label>
+            <textarea formControlName="serviceConditions" class="form-control" id="serviceConditions" rows="3"
+              placeholder="Enter service conditions"></textarea>
+            <div class="text-danger small" *ngIf="vehicleContractFg.get('serviceConditions')?.invalid && vehicleContractFg.get('serviceConditions')?.touched">
+              <small *ngIf="vehicleContractFg.get('serviceConditions')?.errors?.['required']">Service Conditions is required</small>
+            </div>
+          </div>
+
+          <!-- Buttons Side by Side 50% each -->
+          <div class="mt-4">
+            <div class="d-flex gap-2">
+              <button *ngIf="!isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Save
+              </button>
+              <button *ngIf="isEditMode" type="submit"
+                class="btn btn-primary flex-fill">
+                Update
+              </button>
+              <button type="button" (click)="resetForm()"
+                class="btn btn-light flex-fill">
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Vehicle Contracts List</h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Vehicle ID</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Seats</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contract of vehicleContractList">
+              <td>{{ contract.vehicleId }}</td>
+              <td>{{ formatDate(contract.startDate) }}</td>
+              <td>{{ formatDate(contract.endDate) }}</td>
+              <td>{{ contract.agreedSeat }}</td>
+              <td>{{ contract.price | currency }}</td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': contract.status === 'ACTIVE', 'bg-secondary': contract.status !== 'ACTIVE'}">
+                  {{ contract.status }}
+                </span>
+              </td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm mx-1" (click)="editVehicleContract(contract)">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteVehicleContract(contract.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="vehicleContractList.length === 0">
+              <td colspan="7" class="text-center text-muted py-4">No vehicle contracts found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

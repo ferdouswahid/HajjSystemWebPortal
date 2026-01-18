@@ -1,0 +1,25 @@
+//Core files
+@import "bootstrap_override/variables";
+@import "bootstrap_override/variables-dark";
+
+
+// Structure
+@import "structure/general";
+@import "structure/topbar";
+@import "structure/page-head";
+@import "structure/footer";
+@import "structure/right-sidebar";
+@import "structure/vertical";
+@import "structure/horizontal-nav";
+@import "structure/layouts";
+
+// Components
+@import "components/root";
+@import "components/accordion";
+@import "components/avatar";
+@import "components/helper";
+@import "components/modals";
+@import "components/widgets";
+@import "components/demos";
+
+@import "plugins/icons";

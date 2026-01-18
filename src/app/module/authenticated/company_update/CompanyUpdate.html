@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Update Company Profile</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="companyFg" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <!-- Company Name -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="companyName">Company Name <span class="text-danger">*</span></label>
+              <input formControlName="companyName" class="form-control" type="text" id="companyName"
+                placeholder="Enter company name" />
+              <div class="text-danger small" *ngIf="companyFg.get('companyName')?.invalid && companyFg.get('companyName')?.touched">
+                <small *ngIf="companyFg.get('companyName')?.errors?.['required']">Company Name is required</small>
+              </div>
+            </div>
+
+            <!-- Company Name (Ar) -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="companyNameAr">Company Name (Ar)</label>
+              <input formControlName="companyNameAr" class="form-control" type="text" id="companyNameAr"
+                placeholder="Enter company name in Arabic" />
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- CR Number -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="crNumber">CR Number <span class="text-danger">*</span></label>
+              <input formControlName="crNumber" class="form-control" type="text" id="crNumber"
+                placeholder="Enter CR number" />
+              <div class="text-danger small" *ngIf="companyFg.get('crNumber')?.invalid && companyFg.get('crNumber')?.touched">
+                <small *ngIf="companyFg.get('crNumber')?.errors?.['required']">CR Number is required</small>
+              </div>
+            </div>
+
+            <!-- VAT Reg Number -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="vatRegNumber">VAT Reg Number</label>
+              <input formControlName="vatRegNumber" class="form-control" type="text" id="vatRegNumber"
+                placeholder="Enter VAT registration number" />
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Mobile -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="mobile">Mobile</label>
+              <input formControlName="mobile" class="form-control" type="text" id="mobile"
+                placeholder="Enter mobile number" />
+            </div>
+
+            <!-- Phone -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="phone">Phone</label>
+              <input formControlName="phone" class="form-control" type="text" id="phone"
+                placeholder="Enter phone number" />
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Email -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="email">Email</label>
+              <input formControlName="email" class="form-control" type="email" id="email"
+                placeholder="Enter email address" />
+            </div>
+
+            <!-- Address -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="address">Address</label>
+              <input formControlName="address" class="form-control" type="text" id="address"
+                placeholder="Enter address" />
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Building Number -->
+            <div class="col-md-4 mb-3">
+              <label class="form-label" for="buildingNumber">Building Number</label>
+              <input formControlName="buildingNumber" class="form-control" type="text" id="buildingNumber"
+                placeholder="Enter building number" />
+            </div>
+
+            <!-- District -->
+            <div class="col-md-4 mb-3">
+              <label class="form-label" for="district">District</label>
+              <input formControlName="district" class="form-control" type="text" id="district"
+                placeholder="Enter district" />
+            </div>
+
+            <!-- City -->
+            <div class="col-md-4 mb-3">
+              <label class="form-label" for="city">City</label>
+              <input formControlName="city" class="form-control" type="text" id="city"
+                placeholder="Enter city" />
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Country -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="country">Country</label>
+              <input formControlName="country" class="form-control" type="text" id="country"
+                placeholder="Enter country" />
+            </div>
+
+            <!-- Postal Code -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="postalCode">Postal Code</label>
+              <input formControlName="postalCode" class="form-control" type="text" id="postalCode"
+                placeholder="Enter postal code" />
+            </div>
+          </div>
+
+          <!-- Buttons Side by Side 50% each -->
+          <div class="mt-4">
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary flex-fill">
+                Update
+              </button>
+              <button type="button" (click)="resetForm()" class="btn btn-light flex-fill">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
