@@ -1,0 +1,221 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" *ngIf="!isEditMode">Add New Vehicle</h4>
+                <h4 class="card-title" *ngIf="isEditMode">Edit Vehicle</h4>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="vehicleFg" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <!-- License Plate -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="licensePlate">License Plate <span class="text-danger">*</span></label>
+                            <input formControlName="licensePlate" class="form-control" type="text" id="licensePlate" placeholder="Enter license plate" />
+                            <div class="text-danger small" *ngIf="vehicleFg.get('licensePlate')?.invalid && vehicleFg.get('licensePlate')?.touched">
+                                <small *ngIf="vehicleFg.get('licensePlate')?.errors?.['required']">License Plate is required</small>
+                            </div>
+                        </div>
+
+                        <!-- Vehicle Type -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Vehicle Type <span class="text-danger">*</span></label>
+                            <ng-select [items]="vehicleTypes" formControlName="vehicleType" placeholder="Select type"></ng-select>
+                            <div class="text-danger small" *ngIf="vehicleFg.get('vehicleType')?.invalid && vehicleFg.get('vehicleType')?.touched">
+                                <small *ngIf="vehicleFg.get('vehicleType')?.errors?.['required']">Vehicle Type is required</small>
+                            </div>
+                        </div>
+
+                        <!-- Total Seat -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="totalSeat">Total Seat <span class="text-danger">*</span></label>
+                            <input formControlName="totalSeat" class="form-control" type="number" id="totalSeat" />
+                            <div class="text-danger small" *ngIf="vehicleFg.get('totalSeat')?.invalid && vehicleFg.get('totalSeat')?.touched">
+                                <small *ngIf="vehicleFg.get('totalSeat')?.errors?.['required']">Total Seat is required</small>
+                                <small *ngIf="vehicleFg.get('totalSeat')?.errors?.['minNumber']">Total Seat must be at least 1</small>
+                            </div>
+                        </div>
+
+                        <!-- Model -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="model">Model <span class="text-danger">*</span></label>
+                            <input formControlName="model" class="form-control" type="text" id="model" />
+                          <div class="text-danger small" *ngIf="vehicleFg.get('model')?.invalid && vehicleFg.get('model')?.touched">
+                            <small *ngIf="vehicleFg.get('model')?.errors?.['required']">Model is required</small>
+                          </div>
+                        </div>
+
+                        <!-- Year -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="year">Year <span class="text-danger">*</span></label>
+                            <input formControlName="year" class="form-control" type="number" id="year" />
+                          <div class="text-danger small" *ngIf="vehicleFg.get('year')?.invalid && vehicleFg.get('year')?.touched">
+                            <small *ngIf="vehicleFg.get('year')?.errors?.['required']">Year is required</small>
+                          </div>
+                        </div>
+
+                        <!-- Engine Number -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="engineNumber">Engine Number</label>
+                            <input formControlName="engineNumber" class="form-control" type="text" id="engineNumber" />
+                        </div>
+
+                        <!-- Chassis Number -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="chassisNumber">Chassis Number</label>
+                            <input formControlName="chassisNumber" class="form-control" type="text" id="chassisNumber" />
+                        </div>
+
+                        <!-- Color -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="color">Color</label>
+                            <input formControlName="color" class="form-control" type="text" id="color" />
+                        </div>
+
+
+
+                        <!-- Vendor -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Vendor <span class="text-danger">*</span></label>
+                            <ng-select [items]="vendors" bindLabel="name" bindValue="id" formControlName="vendorId" placeholder="Select vendor"></ng-select>
+                          <div class="text-danger small" *ngIf="vehicleFg.get('vendorId')?.invalid && vehicleFg.get('vendorId')?.touched">
+                            <small *ngIf="vehicleFg.get('vendorId')?.errors?.['required']">Vendor is required</small>
+                          </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="status">Status</label>
+                            <input formControlName="status" class="form-control" type="text" id="status" />
+                        </div>
+
+                        <!-- Features -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="features">Features</label>
+                            <input formControlName="features" class="form-control" type="text" id="features" />
+                        </div>
+                    </div>
+
+                    <hr />
+                    <h5>Vehicle Details</h5>
+                    <div class="">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th style="width: 150px;">Route From <span class="text-danger">*</span></th>
+                                    <th style="width: 150px;">Route To <span class="text-danger">*</span></th>
+                                    <th style="width: 120px;">Trip Type <span class="text-danger">*</span></th>
+                                    <th style="width: 100px;">Price <span class="text-danger">*</span></th>
+                                    <th style="width: 140px;">Departure <span class="text-danger">*</span></th>
+                                    <th style="width: 140px;">Arrival</th>
+                                    <th style="width: 80px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="vehicleDetails">
+                                <tr *ngFor="let detail of vehicleDetails.controls; let i = index" [formGroupName]="i">
+                                    <td>
+                                        <ng-select [items]="routes" bindLabel="name" bindValue="id" formControlName="routeFromId" [clearable]="false"></ng-select>
+                                        <div class="text-danger small" *ngIf="detail.get('routeFromId')?.invalid && detail.get('routeFromId')?.touched">
+                                            <small *ngIf="detail.get('routeFromId')?.errors?.['required']">Required</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <ng-select [items]="routes" bindLabel="name" bindValue="id" formControlName="routeToId" [clearable]="false"></ng-select>
+                                        <div class="text-danger small" *ngIf="detail.get('routeToId')?.invalid && detail.get('routeToId')?.touched">
+                                            <small *ngIf="detail.get('routeToId')?.errors?.['required']">Required</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <ng-select [items]="tripTypes" formControlName="tripType" [clearable]="false"></ng-select>
+                                        <div class="text-danger small" *ngIf="detail.get('tripType')?.invalid && detail.get('tripType')?.touched">
+                                            <small *ngIf="detail.get('tripType')?.errors?.['required']">Required</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" formControlName="price" />
+                                        <div class="text-danger small" *ngIf="detail.get('price')?.invalid && detail.get('price')?.touched">
+                                            <small *ngIf="detail.get('price')?.errors?.['required']">Required</small>
+                                            <small *ngIf="detail.get('price')?.errors?.['minNumber']">Min 0.01</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="departureDate" bsDatepicker
+                                               placeholder="Select date" />
+                                        <div class="text-danger small" *ngIf="detail.get('departureDate')?.invalid && detail.get('departureDate')?.touched">
+                                            <small *ngIf="detail.get('departureDate')?.errors?.['required']">Required</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="arrivalDate" bsDatepicker
+                                               placeholder="Select date" />
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-danger btn-sm" (click)="removeDetail(i, detail)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-info btn-sm mb-3 text-white"
+                            (click)="addDetail()">Add</button>
+
+                    <div class="mt-4">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                {{ isEditMode ? 'Update' : 'Save' }}
+                            </button>
+                            <button type="button" (click)="resetForm()" class="btn btn-light">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Vehicles List</h4>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped table-hover table-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th>License Plate</th>
+                            <th>Type</th>
+                            <th>Model</th>
+                            <th>Total Seat</th>
+                            <th>Vendor</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let vehicle of vehicleList">
+                            <td>{{ vehicle.licensePlate }}</td>
+                            <td>{{ vehicle.vehicleType }}</td>
+                            <td>{{ vehicle.model }}</td>
+                            <td>{{ vehicle.totalSeat }}</td>
+                            <td>{{ vehicle.vendor?.name }}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm mx-1" (click)="editVehicle(vehicle)">
+                                    Edit
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteVehicle(vehicle.id)">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="vehicleList.length === 0">
+                            <td colspan="6" class="text-center text-muted py-4">No vehicles found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

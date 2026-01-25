@@ -1,0 +1,222 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title" *ngIf="!isEditMode">Add New Order</h4>
+        <h4 class="card-title" *ngIf="isEditMode">Edit Order</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="orderFg" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <label class="form-label">Pilgrim Company <span class="text-danger">*</span></label>
+              <ng-select [items]="companies" bindLabel="companyName" bindValue="id"
+                         formControlName="pilgrimCompanyId" placeholder="Select company"
+                         [clearable]="false" (change)="onChangeCompany()"></ng-select>
+              <div class="text-danger small" *ngIf="orderFg.get('pilgrimCompanyId')?.invalid && orderFg.get('pilgrimCompanyId')?.touched">
+                <small *ngIf="orderFg.get('pilgrimCompanyId')?.errors?.['required']">Pilgrim Company is required</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="userId">User ID</label>
+              <ng-select [items]="userList" bindLabel="firstName" bindValue="id"
+                         formControlName="userId" placeholder="Select user"
+                         [clearable]="false" (change)="onChangeUser($event)"></ng-select>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="fullName">Full Name <span class="text-danger">*</span></label>
+              <input formControlName="fullName" class="form-control" type="text" readonly id="fullName" placeholder="Enter full name" />
+              <div class="text-danger small" *ngIf="orderFg.get('fullName')?.invalid && orderFg.get('fullName')?.touched">
+                <small *ngIf="orderFg.get('fullName')?.errors?.['required']">Full Name is required</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="country">Country</label>
+              <input formControlName="country" class="form-control" type="text"  id="country" placeholder="Enter country" />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="mobileNo">Mobile No</label>
+              <input formControlName="mobileNo" class="form-control" type="text"  id="mobileNo" placeholder="Enter mobile number" />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="email">Email</label>
+              <input formControlName="email" class="form-control" type="email" id="email" placeholder="Enter email" />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="invoiceNo">Invoice No <span class="text-danger">*</span></label>
+              <input formControlName="invoiceNo" class="form-control" type="text" readonly id="invoiceNo" placeholder="Enter invoice number" />
+              <div class="text-danger small" *ngIf="orderFg.get('invoiceNo')?.invalid && orderFg.get('invoiceNo')?.touched">
+                <small *ngIf="orderFg.get('invoiceNo')?.errors?.['required']">Invoice No is required</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="totalAmount">Total Amount <span class="text-danger">*</span></label>
+              <input formControlName="totalAmount" class="form-control" type="number" id="totalAmount" placeholder="Enter total amount" />
+              <div class="text-danger small" *ngIf="orderFg.get('totalAmount')?.invalid && orderFg.get('totalAmount')?.touched">
+                <small *ngIf="orderFg.get('totalAmount')?.errors?.['required']">Total Amount is required</small>
+                <small *ngIf="orderFg.get('totalAmount')?.errors?.['minNumber']">Total Amount must be at least 0</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="totalDiscount">Total Discount <span class="text-danger">*</span></label>
+              <input formControlName="totalDiscount" class="form-control" type="number" id="totalDiscount" placeholder="Enter total discount" />
+              <div class="text-danger small" *ngIf="orderFg.get('totalDiscount')?.invalid && orderFg.get('totalDiscount')?.touched">
+                <small *ngIf="orderFg.get('totalDiscount')?.errors?.['required']">Total Discount is required</small>
+                <small *ngIf="orderFg.get('totalDiscount')?.errors?.['minNumber']">Total Discount must be at least 0</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="totalNetAmount">Total Net Amount <span class="text-danger">*</span></label>
+              <input formControlName="totalNetAmount" class="form-control" type="number" id="totalNetAmount" placeholder="Enter total net amount" />
+              <div class="text-danger small" *ngIf="orderFg.get('totalNetAmount')?.invalid && orderFg.get('totalNetAmount')?.touched">
+                <small *ngIf="orderFg.get('totalNetAmount')?.errors?.['required']">Total Net Amount is required</small>
+                <small *ngIf="orderFg.get('totalNetAmount')?.errors?.['minNumber']">Total Net Amount must be at least 0</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="paid">Paid <span class="text-danger">*</span></label>
+              <input formControlName="paid" class="form-control" type="number" id="paid" placeholder="Enter paid amount" />
+              <div class="text-danger small" *ngIf="orderFg.get('paid')?.invalid && orderFg.get('paid')?.touched">
+                <small *ngIf="orderFg.get('paid')?.errors?.['required']">Paid is required</small>
+                <small *ngIf="orderFg.get('paid')?.errors?.['minNumber']">Paid must be at least 0</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label" for="date">Date <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="date" bsDatepicker id="date" placeholder="Select date" />
+              <div class="text-danger small" *ngIf="orderFg.get('date')?.invalid && orderFg.get('date')?.touched">
+                <small *ngIf="orderFg.get('date')?.errors?.['required']">Date is required</small>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+          <h5>Order Details</h5>
+          <div class="">
+            <table class="table table-striped table-sm">
+              <thead>
+              <tr>
+                <th style="width: 150px;">Package <span class="text-danger">*</span></th>
+                <th style="width: 100px;">Price <span class="text-danger">*</span></th>
+                <th style="width: 100px;">Discount <span class="text-danger">*</span></th>
+                <th style="width: 100px;">Net Price <span class="text-danger">*</span></th>
+                <th style="width: 150px;">Full Name</th>
+                <th style="width: 120px;">Country</th>
+                <th style="width: 120px;">Mobile No</th>
+                <th style="width: 150px;">Email</th>
+                <th style="width: 120px;">Passport No</th>
+                <th style="width: 80px;">Action</th>
+              </tr>
+              </thead>
+              <tbody formArrayName="orderDetails">
+              <tr *ngFor="let detail of orderDetails.controls; let i = index" [formGroupName]="i">
+                <td>
+                  <ng-select [items]="packages" bindLabel="title" bindValue="id" formControlName="packageId" placeholder="Select package" [clearable]="false"></ng-select>
+                  <div class="text-danger small" *ngIf="detail.get('packageId')?.invalid && detail.get('packageId')?.touched">
+                    <small *ngIf="detail.get('packageId')?.errors?.['required']">Required</small>
+                  </div>
+                </td>
+                <td>
+                  <input type="number" class="form-control" formControlName="price" placeholder="Price" />
+                  <div class="text-danger small" *ngIf="detail.get('price')?.invalid && detail.get('price')?.touched">
+                    <small *ngIf="detail.get('price')?.errors?.['required']">Required</small>
+                    <small *ngIf="detail.get('price')?.errors?.['minNumber']">Min 0</small>
+                  </div>
+                </td>
+                <td>
+                  <input type="number" class="form-control" formControlName="discount" placeholder="Discount" />
+                  <div class="text-danger small" *ngIf="detail.get('discount')?.invalid && detail.get('discount')?.touched">
+                    <small *ngIf="detail.get('discount')?.errors?.['required']">Required</small>
+                    <small *ngIf="detail.get('discount')?.errors?.['minNumber']">Min 0</small>
+                  </div>
+                </td>
+                <td>
+                  <input type="number" class="form-control" formControlName="netPrice" placeholder="Net Price" />
+                  <div class="text-danger small" *ngIf="detail.get('netPrice')?.invalid && detail.get('netPrice')?.touched">
+                    <small *ngIf="detail.get('netPrice')?.errors?.['required']">Required</small>
+                    <small *ngIf="detail.get('netPrice')?.errors?.['minNumber']">Min 0</small>
+                  </div>
+                </td>
+                <td>
+                  <input type="text" class="form-control" formControlName="fullName" placeholder="Full Name" />
+                </td>
+                <td>
+                  <input type="text" class="form-control" formControlName="country" placeholder="Country" />
+                </td>
+                <td>
+                  <input type="text" class="form-control" formControlName="mobileNo" placeholder="Mobile" />
+                </td>
+                <td>
+                  <input type="email" class="form-control" formControlName="email" placeholder="Email" />
+                </td>
+                <td>
+                  <input type="text" class="form-control" formControlName="passportNo" placeholder="Passport" />
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-danger btn-sm" (click)="removeDetail(i, detail)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-info btn-sm mb-3 text-white"
+                  (click)="addDetail()">Add</button>
+
+          <div class="mt-4">
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary">
+                {{ isEditMode ? 'Update' : 'Save' }}
+              </button>
+              <button type="button" (click)="resetForm()" class="btn btn-light">
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="col-12 mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Orders List</h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-hover table-sm mb-0">
+          <thead>
+          <tr>
+            <th>invoiceNo</th>
+            <th>fullName</th>
+            <th>country</th>
+            <th>mobileNo</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orderList">
+            <td>{{ order.invoiceNo }}</td>
+            <td>{{ order.fullName }}</td>
+            <td>{{ order.country }}</td>
+            <td>{{ order.mobileNo }}</td>
+            <td>
+              <button type="button" class="btn btn-info btn-sm mx-1" (click)="editOrder(order)">
+                Edit
+              </button>
+              <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteOrder(order.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="orderList.length === 0">
+            <td colspan="6" class="text-center text-muted py-4">No Orders found</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

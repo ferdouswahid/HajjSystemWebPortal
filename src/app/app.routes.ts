@@ -34,8 +34,8 @@ export const routeList: Route[] = [
         loadComponent: () => import('./module/authenticated/company_create/CompanyCreate').then(m => m.CompanyCreate)
       },
       {
-        path: 'company-update',
-        loadComponent: () => import('./module/authenticated/company_update/CompanyUpdate').then(m => m.CompanyUpdate)
+        path: 'company-profile',
+        loadComponent: () => import('./module/authenticated/company_profile/CompanyProfile').then(m => m.CompanyProfile)
       },
       {
         path: 'location',
@@ -50,16 +50,32 @@ export const routeList: Route[] = [
         loadComponent: () => import('./module/authenticated/airline_route/AirlineRouteComp').then(m => m.AirlineRouteComp)
       },
       {
-        path: 'vehicle-contract',
-        loadComponent: () => import('./module/authenticated/vehicle_contract/VehicleContractComp').then(m => m.VehicleContractComp)
-      },
-      {
         path: 'vehicle-route',
         loadComponent: () => import('./module/authenticated/vehicle_route/VehicleRouteComp').then(m => m.VehicleRouteComp)
       },
       {
         path: 'vendor',
         loadComponent: () => import('./module/authenticated/vendor/VendorComp').then(m => m.VendorComp)
+      },
+      {
+        path: 'vehicle',
+        loadComponent: () => import('./module/authenticated/vehicle/VehicleComp').then(m => m.VehicleComp)
+      },
+      {
+        path: 'contract',
+        loadComponent: () => import('./module/authenticated/contract/ContractComp').then(m => m.ContractComp)
+      },
+      {
+        path: 'package-type',
+        loadComponent: () => import('./module/authenticated/package_type/PackageTypeComp').then(m => m.PackageTypeComp)
+      },
+      {
+        path: 'package',
+        loadComponent: () => import('./module/authenticated/package/PackageComp').then(m => m.PackageComp)
+      },
+      {
+        path: 'order',
+        loadComponent: () => import('./module/authenticated/order/OrderComp').then(m => m.OrderComp)
       }
       ]
       }

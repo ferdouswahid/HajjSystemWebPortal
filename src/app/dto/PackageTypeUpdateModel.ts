@@ -1,6 +1,6 @@
 import { prop, required } from '@rxweb/reactive-form-validators';
 
-export class LocationModel {
+export class PackageTypeUpdateModel {
   @prop()
   id: number | null = null;
 
@@ -8,12 +8,12 @@ export class LocationModel {
   name: string | null = null;
 
   @prop()
-  description: string | null = null;
+  detail: string | null = null;
 
-  @prop()
-  isEnabled: boolean = true;
+  @prop() @required()
+  companyId: number | null = null;
 
-  constructor(o?: Partial<LocationModel>) {
+  constructor(o?: Partial<PackageTypeUpdateModel>) {
     Object.assign(this, o);
   }
 }

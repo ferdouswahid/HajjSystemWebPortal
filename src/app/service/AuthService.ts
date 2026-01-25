@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {LocalStorageService} from './LocalStorageService';
-import {AuthApiService} from './api_services/AuthApiService';
-import {SeasonApiService} from './api_services/SeasonApiService';
-import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {NotificationService} from './NotificationService';
-import {FakeAuthenticationService} from './FakeAuthenticationService';
 import {JwtDecodeService} from './JwtDecodeService';
 import {JwtPayloadDto} from '../dto/JwtPayloadDto';
 
@@ -94,7 +89,7 @@ export class AuthService {
    */
   logout(): void {
     this.clearAuthData();
-    this.router.navigate(['/login']);
+    //this.router.navigate(['/login']);
   }
 
   /**

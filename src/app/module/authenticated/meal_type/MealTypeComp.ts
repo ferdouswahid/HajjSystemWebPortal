@@ -6,6 +6,7 @@ import { MealTypeApiService } from '../../../service/api_services/MealTypeApiSer
 import { NotificationService } from '../../../service/NotificationService';
 import { MealTypeModel } from '../../../dto/MealTypeModel';
 import { tap } from 'rxjs';
+import {AuthService} from '../../../service/AuthService';
 
 @Component({
   selector: 'app-meal-type',
@@ -25,15 +26,21 @@ export class MealTypeComp implements OnInit {
   mealTypeList: MealTypeModel[] = [];
   isEditMode = false;
   selectedMealTypeId: number | null = null;
+  companyId: number | null = null;
 
   constructor(
     private rxFormBuilder: RxFormBuilder,
     private mealTypeApiService: MealTypeApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.loadMealTypes();
+
+    const decodedPayload = this.authService.getJwtPayload();
+    const rawCompanyId = decodedPayload?.CompanyId ?? '';
+    this.companyId = rawCompanyId !== '' ? Number(rawCompanyId) : null;
   }
 
   loadMealTypes(): void {
@@ -71,6 +78,7 @@ export class MealTypeComp implements OnInit {
         }
       });
     } else {
+      model.companyId = this.companyId;
       this.mealTypeApiService.create(model).subscribe({
         next: () => {
           this.notificationService.success('Meal type created successfully');

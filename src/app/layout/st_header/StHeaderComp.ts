@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LAYOUT_MODE } from "../layouts.model";
 import { EventService } from "../../service/EventService";
 import { FakeAuthenticationService } from "../../service/FakeAuthenticationService";
+import {AuthService} from '../../service/AuthService';
 
 @Component({
   selector: 'StHeaderComp',
@@ -20,6 +21,7 @@ export class StHeaderComp implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private fakeAuthenticationService: FakeAuthenticationService,
     private eventService: EventService
   ) {
@@ -72,8 +74,9 @@ export class StHeaderComp implements OnInit {
   }
 
   logout() {
+    this.authService.logout();
     //this.fakeAuthenticationService.logout();
-    localStorage.removeItem('hajj_system_jwt');
+    //localStorage.removeItem('hajj_system_jwt');
     this.router.navigate(['/login']);
   }
 }

@@ -6,6 +6,7 @@ import { CompanyApiService } from '../../../service/api_services/CompanyApiServi
 import { NotificationService } from '../../../service/NotificationService';
 import { CompanyModel } from '../../../dto/CompanyModel';
 import { ActivatedRoute, Router } from '@angular/router';
+import {AuthService} from "../../../service/AuthService";
 
 @Component({
   selector: 'app-company-update',
@@ -16,36 +17,36 @@ import { ActivatedRoute, Router } from '@angular/router';
     FormsModule,
     RxReactiveFormsModule
   ],
-  templateUrl: './CompanyUpdate.html',
-  styleUrls: ['./CompanyUpdate.scss'],
+  templateUrl: './CompanyProfile.html',
+  styleUrls: ['./CompanyProfile.scss'],
   providers: [CompanyApiService]
 })
-export class CompanyUpdate implements OnInit {
+export class CompanyProfile implements OnInit {
   companyFg: FormGroup = this.rxFormBuilder.formGroup(CompanyModel);
-  id: number | null = 1;
 
   constructor(
     private rxFormBuilder: RxFormBuilder,
     private companyApiService: CompanyApiService,
     private notificationService: NotificationService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    if (this.id) {
-      this.loadCompany(this.id);
-    }
+    const decodedPayload = this.authService.getJwtPayload();
+    console.log('LO JWT payload:', decodedPayload);
+    console.log('lo JWT UserName:', decodedPayload?.UserName);
+    console.log('lo JWT CompanyId:', decodedPayload?.CompanyId);
+    console.log('lo JWT roles:', decodedPayload?.roles);
 
-    // this.route.params.subscribe(params => {
-    //   this.id = +params['id'];
-    //   if (this.id) {
-    //     this.loadCompany(this.id);
-    //   }
-    // });
+    let companyId = decodedPayload?.CompanyId;
+    if (companyId) {
+      this.loadCompany(companyId);
+    }
   }
 
-  loadCompany(id: number): void {
+  loadCompany(id: string): void {
     this.companyApiService.getById(id).subscribe({
       next: (data) => {
         this.companyFg.patchValue(data);
@@ -63,7 +64,6 @@ export class CompanyUpdate implements OnInit {
 
     const formValue = this.companyFg.value;
     const model = new CompanyModel(formValue);
-    model.id = this.id;
     this.companyApiService.update(model).subscribe({
       next: () => {
         this.notificationService.success('Company updated successfully');
@@ -92,8 +92,8 @@ export class CompanyUpdate implements OnInit {
 
   resetForm(): void {
     this.companyFg.reset();
-    if (this.id) {
-      this.loadCompany(this.id);
-    }
+    // if (this.id) {
+    //   this.loadCompany(this.id);
+    // }
   }
 }

@@ -10,6 +10,9 @@ export class MealTypeModel {
   @prop()
   detail: string | null = null;
 
+  @prop() @required()
+  companyId: number | null = null;
+
   @prop()
   isEnabled: boolean = true;
 

@@ -1,35 +1,32 @@
 import { prop, required } from '@rxweb/reactive-form-validators';
+import { VehicleModel } from './VehicleModel';
+import { ContractModel } from './ContractModel';
+import { CompanyModel } from './CompanyModel';
 
 export class VehicleContractModel {
   @prop()
   id: number | null = null;
 
-  @prop() @required()
+  @prop()
   vehicleId: number | null = null;
 
   @prop()
-  vehicle: any | null = null;
-
-  @prop() @required()
-  startDate: string | null = null;
-
-  @prop() @required()
-  endDate: string | null = null;
-
-  @prop() @required()
-  agreedSeat: number | null = null;
-
-  @prop() @required()
-  serviceConditions: string | null = null;
-
-  @prop() @required()
-  status: string | null = null;
-
-  @prop() @required()
-  price: number | null = null;
+  vehicle: VehicleModel | null = null;
 
   @prop()
-  isEnabled: boolean = true;
+  contractId: number | null = null;
+
+  @prop()
+  contract: ContractModel | null = null;
+
+  @prop()
+  agreedSeat: number | null = null;
+
+  @prop()
+  companyId: number | null = null;
+
+  @prop()
+  company: CompanyModel | null = null;
 
   constructor(o?: Partial<VehicleContractModel>) {
     Object.assign(this, o);

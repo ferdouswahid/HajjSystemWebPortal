@@ -1,0 +1,171 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" *ngIf="!isEditMode">Add New Contract</h4>
+                <h4 class="card-title" *ngIf="isEditMode">Edit Contract</h4>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="contractFg" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                      <div class="col-md-3 mb-3">
+                        <label class="form-label" for="startDate">Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="title" placeholder="Enter Title"/>
+                        <div class="text-danger small" *ngIf="contractFg.get('title')?.invalid && contractFg.get('title')?.touched">
+                          <small *ngIf="contractFg.get('title')?.errors?.['required']">Title is required</small>
+                        </div>
+                      </div>
+
+                        <!-- Vendor -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Vendor <span class="text-danger">*</span></label>
+                            <ng-select [items]="vendors" bindLabel="name" bindValue="id" formControlName="vendorId" placeholder="Select vendor" [clearable]="false"></ng-select>
+                            <div class="text-danger small" *ngIf="contractFg.get('vendorId')?.invalid && contractFg.get('vendorId')?.touched">
+                                <small *ngIf="contractFg.get('vendorId')?.errors?.['required']">Vendor is required</small>
+                            </div>
+                        </div>
+
+                        <!-- Contract Type -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Contract Type <span class="text-danger">*</span></label>
+                            <ng-select [items]="contractTypes" formControlName="contractType" placeholder="Select type" [clearable]="false"></ng-select>
+                            <div class="text-danger small" *ngIf="contractFg.get('contractType')?.invalid && contractFg.get('contractType')?.touched">
+                                <small *ngIf="contractFg.get('contractType')?.errors?.['required']">Contract Type is required</small>
+                            </div>
+                        </div>
+
+                        <!-- Start Date -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="startDate">Start Date <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="startDate" bsDatepicker id="startDate" placeholder="Select start date" />
+                            <div class="text-danger small" *ngIf="contractFg.get('startDate')?.invalid && contractFg.get('startDate')?.touched">
+                                <small *ngIf="contractFg.get('startDate')?.errors?.['required']">Start Date is required</small>
+                            </div>
+                        </div>
+
+                        <!-- End Date -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="endDate">End Date <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="endDate" bsDatepicker id="endDate" placeholder="Select end date" />
+                            <div class="text-danger small" *ngIf="contractFg.get('endDate')?.invalid && contractFg.get('endDate')?.touched">
+                                <small *ngIf="contractFg.get('endDate')?.errors?.['required']">End Date is required</small>
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="status">Status</label>
+                            <input formControlName="status" class="form-control" type="text" id="status" placeholder="Enter status" />
+                        </div>
+
+                        <!-- Service Conditions -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="serviceConditions">Service Conditions</label>
+                            <textarea formControlName="serviceConditions" class="form-control" id="serviceConditions" rows="2" placeholder="Enter service conditions"></textarea>
+                        </div>
+
+
+                    </div>
+
+                    <hr />
+                    <h5>Vehicle Contracts</h5>
+                    <div class="">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Vehicle <span class="text-danger">*</span></th>
+                                    <th style="width: 80px;">Agreed Seat <span class="text-danger">*</span></th>
+                                    <th style="width: 80px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="vehicleContracts">
+                               <tr *ngFor="let detail of vehicleContracts.controls; let i = index" [formGroupName]="i">
+                                   <td>
+                                       <ng-select [items]="vehicles" bindLabel="licensePlate" bindValue="id" formControlName="vehicleId" placeholder="Select vehicle" [clearable]="false"></ng-select>
+                                       <div class="text-danger small" *ngIf="detail.get('vehicleId')?.invalid && detail.get('vehicleId')?.touched">
+                                           <small *ngIf="detail.get('vehicleId')?.errors?.['required']">Required</small>
+                                       </div>
+                                   </td>
+                                    <td>
+                                        <input type="number" class="form-control" formControlName="agreedSeat" placeholder="Seats" />
+                                        <div class="text-danger small" *ngIf="detail.get('agreedSeat')?.invalid && detail.get('agreedSeat')?.touched">
+                                            <small *ngIf="detail.get('agreedSeat')?.errors?.['required']">Required</small>
+                                            <small *ngIf="detail.get('agreedSeat')?.errors?.['minNumber']">Min 1</small>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-danger btn-sm" (click)="removeDetail(i, detail)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-info btn-sm mb-3 text-white"
+                            (click)="addDetail()">Add</button>
+
+                    <div class="mt-4">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                {{ isEditMode ? 'Update' : 'Save' }}
+                            </button>
+                            <button type="button" (click)="resetForm()" class="btn btn-light">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Contracts List</h4>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped table-hover table-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Vendor</th>
+                            <th>Contract Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Company</th>
+                            <th>Season</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let contract of contractList">
+                            <td>{{ contract.title }}</td>
+                            <td>{{ contract.vendor?.name }}</td>
+                            <td>{{ contract.contractType }}</td>
+                            <td>{{ contract.startDate | date:'yyyy-MM-dd' }}</td>
+                            <td>{{ contract.endDate | date:'yyyy-MM-dd' }}</td>
+                            <td>{{ contract.company?.companyName }}</td>
+                            <td>{{ contract.season?.title }}</td>
+                            <td>{{ contract.status }}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm mx-1" (click)="editContract(contract)">
+                                    Edit
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteContract(contract.id)">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="contractList.length === 0">
+                            <td colspan="8" class="text-center text-muted py-4">No contracts found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

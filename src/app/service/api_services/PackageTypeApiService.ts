@@ -2,21 +2,23 @@ import { Injectable } from "@angular/core";
 import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from "../ToastService";
-import { Observable, shareReplay, throwError } from "rxjs";
+import { Observable, throwError, shareReplay } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { CompanyModel } from "../../dto/CompanyModel";
+import { PackageTypeModel } from "../../dto/PackageTypeModel";
+import { PackageTypeUpdateModel } from "../../dto/PackageTypeUpdateModel";
+import { PackageTypeSearchModel } from "../../dto/PackageTypeSearchModel";
 
 @Injectable()
-export class CompanyApiService {
-  private readonly END_POINT = `${environment.baseUrl}/Company`;
+export class PackageTypeApiService {
+  private readonly END_POINT = `${environment.baseUrl}/PackageType`;
 
   constructor(private http: HttpClient,
     private toast: ToastrService) {
   }
 
-  getList(): Observable<Array<CompanyModel>> {
+  getList(): Observable<Array<PackageTypeModel>> {
     const url = `${this.END_POINT}`;
-    return this.http.get<{ data: Array<CompanyModel> }>(`${url}`)
+    return this.http.get<{ data: Array<PackageTypeModel> }>(`${url}`)
       .pipe(
         map(res => res.data),
         shareReplay(),
@@ -27,38 +29,50 @@ export class CompanyApiService {
       );
   }
 
-  getById(id: string): Observable<CompanyModel> {
-    const url = `${this.END_POINT}/${id}`;
-    return this.http.get<{data: CompanyModel}>(url)
+  search(searchModel: PackageTypeSearchModel): Observable<Array<PackageTypeModel>> {
+    const url = `${this.END_POINT}/search`;
+    return this.http.post<{ data: Array<PackageTypeModel> }>(url, searchModel)
       .pipe(
         map(res => res.data),
         shareReplay(),
         catchError(err => {
-          console.error(err);
+          this.toast.messages$ = err.error.message;
           return throwError(err);
         })
       );
   }
 
-  create(model: CompanyModel): Observable<any> {
+  getById(id: number): Observable<PackageTypeModel> {
+    const url = `${this.END_POINT}/${id}`;
+    return this.http.get<PackageTypeModel>(url)
+      .pipe(
+        shareReplay(),
+        catchError(err => {
+          this.toast.messages$ = err.error.message;
+          return throwError(err);
+        })
+      );
+  }
+
+  create(model: PackageTypeUpdateModel): Observable<any> {
     const url = `${this.END_POINT}`;
     return this.http.post(url, model)
       .pipe(
         shareReplay(),
         catchError(err => {
-          console.error(err);
+          this.toast.messages$ = err.error.message;
           return throwError(err);
         })
       );
   }
 
-  update(model: CompanyModel): Observable<any> {
+  update(model: PackageTypeUpdateModel): Observable<any> {
     const url = `${this.END_POINT}`;
     return this.http.put(url, model)
       .pipe(
         shareReplay(),
         catchError(err => {
-          console.error(err);
+          this.toast.messages$ = err.error.message;
           return throwError(err);
         })
       );
@@ -70,7 +84,7 @@ export class CompanyApiService {
       .pipe(
         shareReplay(),
         catchError(err => {
-          console.error(err);
+          this.toast.messages$ = err.error.message;
           return throwError(err);
         })
       );

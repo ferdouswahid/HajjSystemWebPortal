@@ -6,7 +6,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { LocationApiService } from '../../../service/api_services/LocationApiService';
 import { NotificationService } from '../../../service/NotificationService';
 import { LocationModel } from '../../../dto/LocationModel';
-import {LocationTypeEnum} from "../../../enum/LocationTypeEnum";
 import { tap } from 'rxjs';
 
 @Component({
@@ -28,7 +27,6 @@ export class LocationComp implements OnInit {
   locationList: LocationModel[] = [];
   isEditMode = false;
   selectedLocationId: number | null = null;
-  locationTypes = Object.values(LocationTypeEnum);
 
   constructor(
     private rxFormBuilder: RxFormBuilder,
@@ -93,20 +91,13 @@ export class LocationComp implements OnInit {
       this.notificationService.error('Name is required');
       return false;
     }
-    if (!this.locationFg.value.type) {
-      this.notificationService.error('Type is required');
-      return false;
-    }
     return true;
   }
 
   editLocation(location: LocationModel): void {
     this.isEditMode = true;
     this.selectedLocationId = location.id;
-    this.locationFg.patchValue({
-      name: location.name,
-      type: location.type,
-    });
+    this.locationFg.patchValue(location);
   }
 
   deleteLocation(id: number | null): void {
@@ -134,8 +125,4 @@ export class LocationComp implements OnInit {
     this.selectedLocationId = null;
   }
 
-  formatDate(date: any): string {
-    if (!date) return '';
-    return new Date(date).toLocaleDateString();
-  }
 }

@@ -37,7 +37,7 @@ export class VerticalNavComp implements OnInit {
 
   ngOnInit(): void {
     this.menuItemList = [
-      { id: '2', label: 'Dashboard', icon: 'fas fa-university fa-2x', link: '/authenticated/dashboard' },
+      { id: '1', label: 'Dashboard', icon: 'fas fa-university fa-2x', link: '/authenticated/dashboard' },
       {
         id: '2', label: 'App Setup', icon: 'fas fa-tools fa-2x', subMenuItemList: [
           { id: '201', label: 'Season', link: '/authenticated/season' },
@@ -45,14 +45,20 @@ export class VerticalNavComp implements OnInit {
           { id: '203', label: 'Location', link: '/authenticated/location' },
           { id: '204', label: 'Meal Type', link: '/authenticated/meal-type' },
           { id: '205', label: 'Airline Route', link: '/authenticated/airline-route' },
-          { id: '206', label: 'Vehicle Contract', link: '/authenticated/vehicle-contract' },
           { id: '207', label: 'Vehicle Route', link: '/authenticated/vehicle-route' },
           { id: '208', label: 'Vendor', link: '/authenticated/vendor' },
+          { id: '209', label: 'Vehicle', link: '/authenticated/vehicle' },
+          { id: '210', label: 'Package Type', link: '/authenticated/package-type' },
+
         ]
       },
-      { id: '3', label: 'Company Update', icon: 'fas fa-user fa-2x', link: '/authenticated/company-update' },
-      {
-        id: '6', label: 'Multi nav', icon: 'fas fa-pen-nib fa-2x', subMenuItemList: [
+      { id: '3', label: 'Company Profile', icon: 'fas fa-user fa-2x', link: '/authenticated/company-profile' },
+      { id: '4', label: 'Contract', link: '/authenticated/contract' },
+      { id: '5', label: 'Package', link: '/authenticated/package' },
+      { id: '6', label: 'Order', link: '/authenticated/order' },
+
+/*      {
+        id: '10', label: 'Multi nav', icon: 'fas fa-pen-nib fa-2x', subMenuItemList: [
           { id: '31', label: 'Level 1.1', link: '/about-us' },
           {
             id: '32', label: 'Level 1.2', subMenuItemList: [
@@ -61,7 +67,7 @@ export class VerticalNavComp implements OnInit {
             ]
           },
         ]
-      },
+      },*/
 
     ];
   }

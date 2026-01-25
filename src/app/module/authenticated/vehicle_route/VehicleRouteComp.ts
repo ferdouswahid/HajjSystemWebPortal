@@ -6,6 +6,7 @@ import { VehicleRouteApiService } from '../../../service/api_services/VehicleRou
 import { NotificationService } from '../../../service/NotificationService';
 import { VehicleRouteModel } from '../../../dto/VehicleRouteModel';
 import { tap } from 'rxjs';
+import {AuthService} from '../../../service/AuthService';
 
 @Component({
   selector: 'app-vehicle-route',
@@ -25,15 +26,22 @@ export class VehicleRouteComp implements OnInit {
   vehicleRouteList: VehicleRouteModel[] = [];
   isEditMode = false;
   selectedVehicleRouteId: number | null = null;
+  companyId: number | null = null;
 
   constructor(
     private rxFormBuilder: RxFormBuilder,
     private vehicleRouteApiService: VehicleRouteApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.loadVehicleRoutes();
+
+    const decodedPayload = this.authService.getJwtPayload();
+    const rawCompanyId = decodedPayload?.CompanyId ?? '';
+    this.companyId = rawCompanyId !== '' ? Number(rawCompanyId) : null;
+
   }
 
   loadVehicleRoutes(): void {
@@ -71,6 +79,7 @@ export class VehicleRouteComp implements OnInit {
         }
       });
     } else {
+      model.companyId = this.companyId;
       this.vehicleRouteApiService.create(model).subscribe({
         next: () => {
           this.notificationService.success('Vehicle route created successfully');
